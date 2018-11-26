@@ -22,7 +22,7 @@ Open inverse.m where exist experiments of calculations similar to the MaslowCNC 
 
 ## Playing with inverse():
 Let's get a chain length estimation for a target X,Y coordinate:
-Get a plain left chain length value (no flex, no stretch, no sag correction) for the lower left corner by typing:
+Get a plain right chain length value (no flex, no stretch, no sag correction) for the lower left corner by typing:
 
 `inverse(1200, -600,"bare")`
 

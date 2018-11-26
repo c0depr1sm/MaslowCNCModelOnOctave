@@ -75,11 +75,11 @@ function   [LengthA, LengthB] = inverse(xpos, ypos,type)
   cheatLRMotorsYOffsetAboveWorkSurface = 0; #2.5; ##(mm) increase to raise beam too high
   cheatRotationRadius = 0; #2.5; ##(mm) reduction to have a short radius
   cheatLeftChainLength = 0; #2.5; ##(mm) reduction to have a short chain
-  cheatChainDensity = 14.06E-2; # 1E-6; # kg/m is the integral value used in the inverse calculation
+  cheatChainDensity = 1E-6; # 14.06E-2; # 1E-6; # kg/m is the integral value used in the inverse calculation
   cheatChainWeightDensity = cheatChainDensity * accG;
-  cheatChainElongationFactor = 4.1E-6; # kg/m is the integral value used in the inverse calculation
+  cheatChainElongationFactor = 0; #4.1E-6; # kg/m is the integral value used in the inverse calculation
   cheatleftChainLengthCorrectionRatio = 0; #0.0013; ## adds to leftChainLengthCorrectionRatio
-  cheatmaxTopBeamTipFlexAndTwist = -2.9; # mm added to the beam flex maxTopBeamTipFlexAndTwist
+  cheatmaxTopBeamTipFlexAndTwist = 0; # mm added to the beam flex maxTopBeamTipFlexAndTwist
   
   ## solving parameters (for catenary calculation only)
   maxSagError = 0.01; ##(mm)

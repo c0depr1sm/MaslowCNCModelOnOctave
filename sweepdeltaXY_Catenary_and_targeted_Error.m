@@ -29,7 +29,7 @@
 
 ## Usage: 
 ##  Just run the script. It yields 3 figures where the xy plane is a sweep of the workspace in mm. 
-##  fig 1 is the xy distance from parabola estimation to catenary estimation. 
+##  fig 1 is the xy distance from first estimation model to second estimation model. 
 ##  fig 2 is the x error added to the target position.
 ##  fig 3 is the y error added to the target position. 
 ##
@@ -42,8 +42,8 @@ workspaceHeight = 1222; ## mm
 workspaceWidth = 1240; ## mm
 
 #workSpace area to sweep
-x_zone = [-1200:25:1200];
-y_zone = [600:-25:-600];
+x_zone = [-1200:100:1200];
+y_zone = [600:-100:-600];
 
 #matrice de réponse a remplir
 workspaceX = zeros(length(x_zone),length(y_zone));
@@ -59,11 +59,11 @@ for i = [1:1:length(x_zone)]
     yposraw = y_zone(j);
     workspaceY(i,j) = yposraw;
     
-    ## initial geometry and chains lenght estimation without sag -> call first to gete chain angles estimations
+    ## initial geometry and chains lenght estimation -> call first to get chain angles estimations
     [leftChainExtent_raw, rightChainExtent_raw] = inverse(xposraw, yposraw,"allcatenary_with_error");
     
-    ## get back x and y position but this time include "all" model details
-    [xpos,ypos] = ForwardKynematics (leftChainExtent_raw, rightChainExtent_raw, xposraw, yposraw, "allcatenary"); 
+    ## get back to x and y position but this time include second model (maybe some more details, or some machine simulated errors)
+    [xpos,ypos] = ForwardKynematics (leftChainExtent_raw, rightChainExtent_raw, xposraw, yposraw, "allcatenary_with_error2"); 
     
     ## compute delta x and y and norm
     catenary_errorX(i,j) = -xposraw+xpos;
@@ -78,15 +78,15 @@ endfor
 figure (1);
 surf(workspaceX,workspaceY,catenary_errorSize);
 haxe = gca();
-set(haxe,"dataaspectratio", [200 200 1]);
-title('Distance from target XY coordinates (mm)');
+set(haxe,"dataaspectratio", [200 200 0.5]);
+title('xy distance when omiting kynematics details (mm)');
 figure (2);
 surf(workspaceX,workspaceY,catenary_errorX);
 haxe = gca();
-set(haxe,"dataaspectratio", [200 200 1]);
-title('Add this X error to find where the sled really lands (mm)');
+set(haxe,"dataaspectratio", [200 200 0.1]);
+title('x error when omiting kynematics details (mm)');
 figure (3);
 surf(workspaceX,workspaceY,catenary_errorY);
 haxe = gca();
-set(haxe,"dataaspectratio", [200 200 1]);
-title('Add this Y error to find where the sled really lands (mm)');
+set(haxe,"dataaspectratio", [200 200 0.1]);
+title('y error when omiting kynematics details (mm)');
